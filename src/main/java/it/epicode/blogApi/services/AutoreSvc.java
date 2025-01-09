@@ -1,9 +1,10 @@
 package it.epicode.blogApi.services;
 
 import it.epicode.blogApi.entity.Autore;
-import it.epicode.blogApi.entity.BlogPost;
 import it.epicode.blogApi.repo.AutoreRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,20 +15,35 @@ import java.util.Optional;
 public class AutoreSvc {
     private final AutoreRepository autoreRepo;
 
-    public List<Autore> getAllAutori() {
+    public List<Autore> getAll() {
         return autoreRepo.findAll();
     }
 
     public Optional<Autore> findById(Long id) {
+        if(!autoreRepo.existsById(id)) {
+            throw new EntityNotFoundException("l'autore non è stato trovato");
+        }
+
         return autoreRepo.findById(id);
     }
 
-    public Autore saveAutore(Autore Autore) {
+    public Autore save(Autore Autore) {
         return autoreRepo.save(Autore);
     }
 
+    public Autore edit(Long id, Autore autore) {
 
-    public void deleteAutore(Long id) {
+        Autore existingAutore = autoreRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Autore with ID " + id + " not found"));
+
+        BeanUtils.copyProperties(autore, existingAutore, "id");
+
+
+        return autoreRepo.save(existingAutore);
+    }
+
+
+    public void delete(Long id) {
         autoreRepo.deleteById(id);
     }
 

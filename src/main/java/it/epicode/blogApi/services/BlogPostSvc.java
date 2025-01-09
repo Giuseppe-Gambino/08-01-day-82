@@ -23,11 +23,11 @@ public class BlogPostSvc {
         return blogPostRepo.findById(id);
     }
 
-    public BlogPost savePost(BlogPost blogPost) {
+    public BlogPost save(BlogPost blogPost) {
         return blogPostRepo.save(blogPost);
     }
 
-    public BlogPost editPost(Long id, BlogPost blogPost) {
+    public BlogPost edit(Long id, BlogPost blogPost) {
 
         BlogPost existingPost = blogPostRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("BlogPost with ID " + id + " not found"));
@@ -39,7 +39,7 @@ public class BlogPostSvc {
     }
 
 
-    public void deletePost(Long id) {
+    public void delete(Long id) {
         blogPostRepo.deleteById(id);
     }
 

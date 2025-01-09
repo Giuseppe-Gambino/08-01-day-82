@@ -25,4 +25,9 @@ public class BlogPost {
 
     @Column(name = "tempo_di_lettura")
     private Integer tempoDiLettura;
+
+    @ManyToOne
+    @JoinColumn(name = "autore_id")
+    private Autore autore;
+
 }

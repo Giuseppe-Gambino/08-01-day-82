@@ -35,17 +35,17 @@ public class BlogPostController {
 
     @PostMapping
     public ResponseEntity<?> savePost(@RequestBody BlogPost blogPost) {
-        return new ResponseEntity<>(blogPostSvc.savePost(blogPost), HttpStatus.CREATED);
+        return new ResponseEntity<>(blogPostSvc.save(blogPost), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     private ResponseEntity<?> editPost(@PathVariable Long id, @RequestBody BlogPost blogPost) {
-        return ResponseEntity.ok(blogPostSvc.editPost(id, blogPost));
+        return ResponseEntity.ok(blogPostSvc.edit(id, blogPost));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        blogPostSvc.deletePost(id);
+        blogPostSvc.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
